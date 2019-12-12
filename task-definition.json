@@ -1,6 +1,6 @@
 {
   "ipcMode": null,
-  "executionRoleArn": "arn:aws:iam::692579640703:role/weeding-gallery-task-role",
+  "executionRoleArn": "arn:aws:iam::692579640703:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
       "dnsSearchDomains": null,
@@ -59,7 +59,7 @@
   "placementConstraints": [],
   "memory": "512",
   "taskRoleArn": "arn:aws:iam::692579640703:role/weeding-gallery-task-role",
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:692579640703:task-definition/wedding-gallery:1",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:692579640703:task-definition/wedding-gallery:3",
   "family": "wedding-gallery",
   "pidMode": null,
   "requiresCompatibilities": [

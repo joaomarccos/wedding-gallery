@@ -2,7 +2,7 @@ import datetime
 import json
 
 import flask_login
-from flask import flash, request, redirect, render_template
+from flask import flash, request, redirect, render_template, jsonify
 from flask_security import login_required, roles_required
 
 from main import service, app
@@ -13,8 +13,11 @@ from upload_utils import allowed_file
 
 @main.route('/')
 def home():
-    page = request.args.get("page", 0)
-    photos = service.get_paginated_items(page, filters={'active': True})
+    page = request.args.get("page", None, type=int)
+    if page is None:
+        return redirect('/?page=1')
+    photos = service.get_paginated_items(page, active=True)
+    app.logger.info(photos)
     return render_template('index.html', photos=photos)
 
 
@@ -49,4 +52,9 @@ def upload_file():
 @login_required
 @roles_required('owner')
 def manage():
-    return render_template('manage-gallery.html', username=json.dumps(flask_login.current_user.email))
+    page = request.args.get("page", None, type=int)
+    if page is None:
+        return redirect('/manage?page=1')
+    photos = service.get_paginated_items(page, active=False)
+    func = lambda: print(photos)
+    return render_template('manage-gallery.html', username=flask_login.current_user.email, photos=photos, func = func)

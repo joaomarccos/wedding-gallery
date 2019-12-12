@@ -11,6 +11,27 @@
 {% block content %}
 <section class="container">
     <h1>Photos:</h1>
+    {% if photos['totalItems'] > 0 %}
+    <div class="row text-center text-lg-left">
+        {% for photo in photos['items'] %}
+        <div class="col-lg-3 col-md-4 col-6">
+            <a href="{{photo.url}}" class="d-block mb-4 h-100">
+                <img class="img-fluid img-thumbnail" src="{{photo.url}}" alt="" title="Download">
+            </a>
+            <p class="text-center">Author: {{photo.author}}</p>
+            <span><i class="glyphicon glyphicon-check"><button onclick="approve('{{photo._id}}')" class="btn btn-link">Approve</button></i></span>
+        </div>
+        {% endfor %}
+        {% if photos['hasPrev'] %}
+        <a href="/?page={{ request.args.get('page', type=int)-1 }}"></a>
+        {% endif %}
+        {% if photos['hasNext'] %}
+        <a href="/?page={{ request.args.get('page', type=int)+1 }}"></a>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="center-block"><h4>No photos was uploaded.</h4></div>
+    {% endif %}
 </section>
 <hr/>
 <section class="container">

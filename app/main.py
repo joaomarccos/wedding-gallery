@@ -19,7 +19,7 @@ setup_logger()
 app = Flask(__name__)
 Bootstrap(app)
 
-app.config['DEBUG'] = True
+# app.config['DEBUG'] = True
 
 # MongoDB Config
 app.config['MONGODB_SETTINGS'] = {

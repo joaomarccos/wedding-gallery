@@ -1,4 +1,4 @@
-FROM tiangolo/meinheld-gunicorn:python3.7
+FROM tiangolo/meinheld-gunicorn:python3.6
 
 LABEL maintainer="João Marcos <joaomarccos.ads@gmail.com>"
 

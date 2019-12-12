@@ -6,3 +6,5 @@
  2. Deploy task on ECS Cluster
  
 ## To test
+
+Access http://3.216.90.168/

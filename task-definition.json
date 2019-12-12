@@ -1,10 +1,18 @@
 {
   "ipcMode": null,
-  "executionRoleArn": null,
+  "executionRoleArn": "arn:aws:iam::692579640703:role/weeding-gallery-task-role",
   "containerDefinitions": [
     {
       "dnsSearchDomains": null,
-      "logConfiguration": null,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "secretOptions": null,
+        "options": {
+          "awslogs-group": "/ecs/wedding-gallery",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
       "entryPoint": null,
       "portMappings": [
         {
@@ -28,7 +36,7 @@
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "692579640703.dkr.ecr.us-east-1.amazonaws.com/wedding-gallery:latest",
+      "image": "692579640703.dkr.ecr.us-east-1.amazonaws.com/wedding-gallery",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -45,13 +53,14 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "weeding-gallery"
+      "name": "wedding-gallery-web"
     }
   ],
   "placementConstraints": [],
   "memory": "512",
   "taskRoleArn": "arn:aws:iam::692579640703:role/weeding-gallery-task-role",
-  "family": "weeding-gallery",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:692579640703:task-definition/wedding-gallery:1",
+  "family": "wedding-gallery",
   "pidMode": null,
   "requiresCompatibilities": [
     "EC2"

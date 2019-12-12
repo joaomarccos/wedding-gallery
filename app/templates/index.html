@@ -1,0 +1,45 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Gallery{% endblock %}
+
+{% block navbar %}
+<div class="navbar">
+    <span class="pull-right"><a class="btn btn-sm btn-default" style="margin: 10px" href="/manage">Manage gallery</a></span>
+    <h3 style="display: block; max-width: 200px">Wedding Gallery</h3>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="container">
+    <h1>Photos:</h1>
+</section>
+<hr/>
+<section class="container">
+    <h2>Select a photo to upload</h2>
+    <p>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    </p>
+    <form method="post" action="/photos" enctype="multipart/form-data">
+        <dl>
+            <p>
+                <input type="file" name="file" autocomplete="off" required>
+            </p>
+        </dl>
+        <dl>
+            <p>
+                <input type="text" name="author" placeholder="Author" autocomplete="off" required>
+            </p>
+        </dl>
+        <p>
+            <input type="submit" value="Submit">
+        </p>
+    </form>
+</section>
+{% endblock %}

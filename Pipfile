@@ -5,7 +5,6 @@ verify_ssl = true
 
 [dev-packages]
 
-
 [requires]
 python_version = "3.7"
 
@@ -14,3 +13,8 @@ allow_prereleases = true
 
 [packages]
 flask = "*"
+flask-security = "*"
+flask-mongoengine = "*"
+bcrypt = "*"
+flask-bootstrap = "*"
+boto3 = "*"

@@ -1,6 +1,9 @@
 {% extends "bootstrap/base.html" %}
 {% block title %}New Photos{% endblock %}
-
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('static', filename='css/gallery.css')}}">
+{% endblock %}
 {% block navbar %}
 <div class="navbar">
     <h5><b>{{username}}</b> <span><a href="/">home</a></span> | <span><a href="/logout">logout</a></span></h5>
@@ -11,22 +14,35 @@
 <h3>New photos</h3>
 
 {% if photos['totalItems'] > 0 %}
-<div class="row text-center text-lg-left">
-    {% for photo in photos['items'] %}
-    <div class="col-lg-3 col-md-4 col-6">
-        <a href="{{photo.url}}" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="{{photo.url}}" alt="" title="Download">
-        </a>
-        <p class="text-center">Author: {{photo.author}}</p>
-        <span id="{{photo._id}}"><button onclick="approve('{{photo._id}}')" class="btn btn-link">Approve</button></i></span>
+<div>
+    <div class="container text-center">
+        <span class="text-sm">page {{photos['page']}} de {{photos['totalPages']}}</span>
+        {% if photos['hasPrev'] %}
+        <a href="/?page={{ photos['page']-1 }}&sort={{request.args.get('sort', 'likes')}}"><< prev</a>
+        {% endif %}
+
+        {% if photos['hasNext'] %}
+        <a href="/?page={{ photos['page']+1 }}&sort={{request.args.get('sort', 'likes')}}">next >></a>
+        {% endif %}
     </div>
-    {% endfor %}
-    {% if photos['hasPrev'] %}
-    <a href="/?page={{ request.args.get('page', type=int)-1 }}"></a>
-    {% endif %}
-    {% if photos['hasNext'] %}
-    <a href="/?page={{ request.args.get('page', type=int)+1 }}"></a>
-    {% endif %}
+    <div id="container" class="clearfix">
+        <div class="grid">
+            {% for photo in photos['items'] %}
+            <div class="grid-item">
+                <div class="grid-item-img">
+                    <img src="{{photo.url}}" alt="">
+                </div>
+                <div class="grid-item-caption">
+                    <span>
+                        <span>Author: {{photo.author}}</span>
+                        <span id="{{photo._id}}"><button onclick="approve('{{photo._id}}')" class="btn btn-link">Approve</button>
+                            </i></span>
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 {% else %}
 <div class="center-block"><h4>No photos to approve.</h4></div>
@@ -35,12 +51,12 @@
 {% endblock %}
 {% block scripts %}
 {{ super() }}
-
+<script src="{{url_for('static', filename='js/gallery-grid.js')}}"></script>
 <script>
     function approve(photo_id) {
-        $.post("/api/photos/"+photo_id+"/approve", function (data) {
-            if(JSON.parse(data).success){
-                $("#"+photo_id).html('<i class="glyphicon glyphicon-check"> Approved');
+        $.post("/api/photos/" + photo_id + "/approve", function (data) {
+            if (JSON.parse(data).success) {
+                $("#" + photo_id).html('<i class="glyphicon glyphicon-check"> Approved');
             }
         });
     }

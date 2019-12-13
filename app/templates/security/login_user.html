@@ -1,0 +1,20 @@
+{% extends "bootstrap/base.html" %}
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}">
+{% endblock %}
+{% block content %}
+<div class="log-form">
+    <h2>Login</h2>
+    <br>
+    {% include "security/_messages.html" %}
+    <form action="{{ url_for_security('login') }}" method="POST" name="login_form">
+        {{ login_user_form.hidden_tag() }}
+        {{ render_field_with_errors(login_user_form.email) }}
+        {{ render_field_with_errors(login_user_form.password) }}
+        {{ render_field(login_user_form.next) }}
+        {{ render_field(login_user_form.submit) }}
+    </form>
+</div><!--end log form -->
+{% endblock %}

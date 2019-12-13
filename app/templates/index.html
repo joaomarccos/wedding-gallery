@@ -1,4 +1,9 @@
 {% extends "bootstrap/base.html" %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('static', filename='css/gallery.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/upload.css')}}">
+{% endblock %}
 {% block title %}Gallery{% endblock %}
 
 {% block navbar %}
@@ -8,45 +13,8 @@
     <h3 style="display: block; max-width: 200px">Wedding Gallery</h3>
 </div>
 {% endblock %}
-
 {% block content %}
-<section class="container">
-    <h1>Photos:</h1>
-    <p>
-        sort by: <a href="/?page={{ request.args.get('page', 1) }}&sort=likes">likes</a> | <a
-            href="/?page={{ request.args.get('page', 1) }}&sort=timestamp">date</a>
-    </p>
-    {% if photos['totalItems'] > 0 %}
-    <div class="row text-center text-lg-left">
-        {% for photo in photos['items'] %}
-        <div class="col-lg-3 col-md-4 col-6">
-            <a href="{{photo.url}}" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="{{photo.url}}" alt="" title="Download">
-            </a>
-            <p class="text-center">Author: {{photo.author}}</p>
-            <span><span id="{{photo._id}}">{{photo.likes}}</span><button onclick="like('{{photo._id}}')"
-                                                                         class="btn btn-link"><i
-                    class="glyphicon glyphicon-thumbs-up"></i></button></span>
-        </div>
-        {% endfor %}
-    </div>
-    <div class="container text-center">
-        <span class="text-sm">page {{photos['page']}} de {{photos['totalPages']}}</span>
-        {% if photos['hasPrev'] %}
-        <a href="/?page={{ photos['page']-1 }}&sort={{request.args.get('sort', 'likes')}}"><< prev</a>
-        {% endif %}
-
-        {% if photos['hasNext'] %}
-        <a href="/?page={{ photos['page']+1 }}&sort={{request.args.get('sort', 'likes')}}">next >></a>
-        {% endif %}
-    </div>
-    {% else %}
-    <div class="center-block"><h4>No photos was uploaded.</h4></div>
-    {% endif %}
-</section>
-<hr/>
-<section class="container">
-    <h2>Select a photo to upload</h2>
+<section class="upload-container">
     <p>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -58,27 +26,71 @@
     {% endif %}
     {% endwith %}
     </p>
-    <form method="post" action="/upload" enctype="multipart/form-data">
-        <dl>
-            <p>
-                <input type="file" name="file" autocomplete="off" required>
-            </p>
-        </dl>
-        <dl>
-            <p>
-                <input type="text" name="author" placeholder="Author" autocomplete="off" required>
-            </p>
-        </dl>
-        <p>
-            <input type="submit" value="Submit">
-        </p>
-    </form>
+    <div>
+        <form method="POST" action="/upload" enctype="multipart/form-data">
+            <div class="file-upload-wrapper" data-text="Send a photo!">
+                <input name="file" type="file" class="file-upload-field" required>
+            </div>
+            <br>
+            <input type="text" class="form-control" name="author" placeholder="Author" autocomplete="off" required>
+            <br>
+            <button class="btn btn-default btn-block" type="submit">
+                <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> SEND!
+            </button>
+        </form>
+    </div>
+</section>
+</hr>
+<section class="container">
+    <h1>Photos:</h1>
+    <p>
+        sort by: <a href="/?page={{ request.args.get('page', 1) }}&sort=likes">likes</a> | <a
+            href="/?page={{ request.args.get('page', 1) }}&sort=timestamp">date</a>
+    </p>
+    {% if photos['totalItems'] > 0 %}
+    <div class="container text-center">
+        <span class="text-sm">page {{photos['page']}} de {{photos['totalPages']}}</span>
+        {% if photos['hasPrev'] %}
+        <a href="/?page={{ photos['page']-1 }}&sort={{request.args.get('sort', 'likes')}}"><< prev</a>
+        {% endif %}
+
+        {% if photos['hasNext'] %}
+        <a href="/?page={{ photos['page']+1 }}&sort={{request.args.get('sort', 'likes')}}">next >></a>
+        {% endif %}
+    </div>
+    <div id="container" class="clearfix">
+        <div class="grid">
+            {% for photo in photos['items'] %}
+            <div class="grid-item">
+                <div class="grid-item-img">
+                    <img src="{{photo.url}}" alt="">
+                </div>
+                <div class="grid-item-caption">
+                    <p class="text-center">Author: {{photo.author}}</p>
+                    <span>
+                        <span id="{{photo._id}}">{{photo.likes}}</span>
+                        <button onclick="like('{{photo._id}}')" class="btn btn-link">
+                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="center-block"><h4>No photos was uploaded.</h4></div>
+    {% endif %}
 </section>
 {% endblock %}
 {% block scripts %}
 {{ super() }}
-
+<script src="{{url_for('static', filename='js/gallery-grid.js')}}"></script>
 <script>
+    $("form").on("change", ".file-upload-field", function () {
+        $(this).parent(".file-upload-wrapper").attr("data-text", $(this).val().replace(/.*(\/|\\)/, ''));
+    });
+
     function like(photo_id) {
         let likes_value = $("#" + photo_id);
         let n_likes = likes_value.html();

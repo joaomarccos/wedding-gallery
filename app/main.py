@@ -18,10 +18,12 @@ Bootstrap(app)
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
 # MongoDB Config
+app.config['MONGODB_DB'] = 'wedding'
 app.config['MONGODB_SETTINGS'] = {
     'db': 'wedding',
     'host': os.environ['MONGO_URI']
 }
+
 
 app.secret_key = os.environ['APP_SECRET']
 app.config['SECURITY_PASSWORD_SALT'] = os.environ['APP_SECRET']

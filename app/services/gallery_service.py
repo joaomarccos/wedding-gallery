@@ -10,7 +10,7 @@ class GalleryService:
         self.bucket = s3.Bucket('wedding-gallery-bkt')
         self.s3 = s3
 
-    def get_paginated_items(self, page, limit=5, order_by='likes', **filters):
+    def get_paginated_items(self, page, limit=20, order_by='likes', **filters):
         """
         obtain all items in gallery collection with pagination feature
         :param order_by: field used to sort
@@ -21,7 +21,7 @@ class GalleryService:
         """
 
         offset = (page - 1) * limit
-        items = Photo.objects(**filters).order_by(order_by).skip(offset).limit(limit)
+        items = Photo.objects(**filters).skip(offset).limit(limit).order_by(order_by)
         total_items = self._count_items(**filters)
         floor_page_division = total_items // limit
         total_pages = (floor_page_division + 1) if total_items % limit > 0 else floor_page_division

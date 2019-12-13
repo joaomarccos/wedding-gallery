@@ -20,7 +20,6 @@ def home():
     if page is None:
         return redirect('/?page=1')
     photos = service.get_paginated_items(page, order_by=sort, active=True)
-    app.logger.info(photos)
     return render_template('index.html', photos=photos)
 
 

@@ -23,8 +23,8 @@ class GalleryService:
         offset = (page - 1) * limit
         items = Photo.objects(**filters).order_by(order_by).skip(offset).limit(limit)
         total_items = self._count_items(**filters)
-        calc_pages = round(total_items / limit)
-        total_pages = calc_pages if calc_pages > 0 else 1
+        floor_page_division = total_items // limit
+        total_pages = (floor_page_division + 1) if total_items % limit > 0 else floor_page_division
         has_next_page = (total_items // page if page > 0 else 1) > limit
         has_prev_page = page > 1 and total_items > 0
         photos = list(map(lambda i: i.to_dict(), [ob.to_mongo() for ob in items]))

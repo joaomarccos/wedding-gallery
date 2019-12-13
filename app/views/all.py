@@ -1,27 +1,30 @@
 import datetime
-import json
 
 import flask_login
-from flask import flash, request, redirect, render_template, jsonify
+from flask import flash, request, redirect, render_template
 from flask_security import login_required, roles_required
 
 from main import service, app
-from views import main
 from models.photo_model import Photo
 from upload_utils import allowed_file
+from views import main
 
 
 @main.route('/')
 def home():
+    sort_keys = ['likes', 'timestamp']
     page = request.args.get("page", None, type=int)
+    sort = request.args.get("sort", 'likes', type=str)
+    if sort not in sort_keys:
+        sort = 'likes'
     if page is None:
         return redirect('/?page=1')
-    photos = service.get_paginated_items(page, active=True)
+    photos = service.get_paginated_items(page, order_by=sort, active=True)
     app.logger.info(photos)
     return render_template('index.html', photos=photos)
 
 
-@main.route('/photos', methods=['POST'])
+@main.route('/upload', methods=['POST'])
 def upload_file():
     app.logger.info('uploading new file')
     if request.method == 'POST':
@@ -56,5 +59,4 @@ def manage():
     if page is None:
         return redirect('/manage?page=1')
     photos = service.get_paginated_items(page, active=False)
-    func = lambda: print(photos)
-    return render_template('manage-gallery.html', username=flask_login.current_user.email, photos=photos, func = func)
+    return render_template('manage-gallery.html', username=flask_login.current_user.email, photos=photos)

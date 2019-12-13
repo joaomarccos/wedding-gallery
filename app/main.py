@@ -15,6 +15,7 @@ app = Flask(__name__)
 Bootstrap(app)
 
 # app.config['DEBUG'] = True
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
 # MongoDB Config
 app.config['MONGODB_SETTINGS'] = {
@@ -49,10 +50,13 @@ def create_user():
 
 
 # Gallery service instance
-service = GalleryService(db, s3)
+service = GalleryService(s3)
 
 from views import main as main_blueprint
+from api import api as api_blueprint
+
 app.register_blueprint(main_blueprint)
+app.register_blueprint(api_blueprint, url_prefix='/api/photos')
 
 if __name__ == '__main__':
     app.run()

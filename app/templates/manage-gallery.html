@@ -3,7 +3,7 @@
 
 {% block navbar %}
 <div class="navbar">
-    <h5><b>{{username}}</b> <span><a href="/logout">logout</a></span></h5>
+    <h5><b>{{username}}</b> <span><a href="/">home</a></span> | <span><a href="/logout">logout</a></span></h5>
 </div>
 {% endblock %}
 
@@ -18,7 +18,7 @@
             <img class="img-fluid img-thumbnail" src="{{photo.url}}" alt="" title="Download">
         </a>
         <p class="text-center">Author: {{photo.author}}</p>
-        <span><i class="glyphicon glyphicon-check"><button onclick="approve('{{photo._id}}')" class="btn btn-link">Approve</button></i></span>
+        <span id="{{photo._id}}"><button onclick="approve('{{photo._id}}')" class="btn btn-link">Approve</button></i></span>
     </div>
     {% endfor %}
     {% if photos['hasPrev'] %}
@@ -38,7 +38,11 @@
 
 <script>
     function approve(photo_id) {
-        console.log(photo_id);
+        $.post("/api/photos/"+photo_id+"/approve", function (data) {
+            if(JSON.parse(data).success){
+                $("#"+photo_id).html('<i class="glyphicon glyphicon-check"> Approved');
+            }
+        });
     }
 </script>
 {% endblock %}

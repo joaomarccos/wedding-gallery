@@ -28,4 +28,4 @@ on master commit:
  - Fill in the new image ID in the Amazon ECS task definition
  - Deploy Amazon ECS task definition
 
-Demo [link]
+[Demo]: http://3.215.179.89

@@ -14,7 +14,7 @@ setup_logger()
 app = Flask(__name__)
 Bootstrap(app)
 
-# app.config['DEBUG'] = True
+app.config['DEBUG'] = True
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
 # MongoDB Config

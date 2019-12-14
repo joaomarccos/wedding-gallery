@@ -5,14 +5,23 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/gallery.css')}}">
 {% endblock %}
 {% block navbar %}
-<div class="navbar">
-    <h5><b>{{username}}</b> <span><a href="/">home</a></span> | <span><a href="/logout">logout</a></span></h5>
-</div>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <span class="navbar-brand">{{username}}</span>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+  </div>
+</nav>
 {% endblock %}
 
 {% block content %}
-<h3>New photos</h3>
-
+<div class="text-center">
+    <h3 class="center-block">Review photos!</h3>
+</div>
 {% if photos['totalItems'] > 0 %}
 <div>
     <div class="container text-center">
@@ -35,8 +44,10 @@
                 <div class="grid-item-caption">
                     <span>
                         <span>Author: {{photo.author}}</span>
-                        <span id="{{photo._id}}"><button onclick="approve('{{photo._id}}')" class="btn btn-link">Approve</button>
-                            </i></span>
+                        <br>
+                        <span id="{{photo._id}}">
+                            <button onclick="approve('{{photo._id}}')" class="btn btn-sm btn-link">Approve</button>
+                        </span>
                     </span>
                 </div>
             </div>
@@ -56,7 +67,7 @@
     function approve(photo_id) {
         $.post("/api/photos/" + photo_id + "/approve", function (data) {
             if (JSON.parse(data).success) {
-                $("#" + photo_id).html('<i class="glyphicon glyphicon-check"> Approved');
+                $("#" + photo_id).html('<i class="glyphicon glyphicon-check"></i> <b>Approved</b> <br>');
             }
         });
     }

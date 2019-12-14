@@ -1,43 +1,6 @@
 #container {
-    width: 80%;
-    max-width: 1170px;
+    width: 100%;
     margin: 50px auto;
-}
-
-@media screen and (max-width: 1200px) {
-    #container {
-        max-width: 960px;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    #container {
-        max-width: 768px;
-    }
-}
-
-@media screen and (max-width: 800px) {
-    #container {
-        max-width: 640px;
-    }
-}
-
-@media screen and (max-width: 640px) {
-    #container {
-        max-width: 480px;
-    }
-}
-
-@media screen and (max-width: 550px) {
-    #container {
-        max-width: 480px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    #container {
-        max-width: 320px;
-    }
 }
 
 .grid-item:hover {
@@ -52,8 +15,29 @@
     background-color: #fff;
     width: 220px;
     padding: 2px;
-    margin: 5px 5px 25px 5px;
+    margin: 50px;
     text-align: center;
+}
+
+.grid-item-caption {
+    font-size: small;
+    font-weight: bold;
+    background: black;
+    text-align: center;
+    color: #5d5d5d;
+    text-transform: capitalize;
+}
+
+.no-decorate:hover {
+    text-decoration: none !important;
+}
+
+.likes{
+    padding: 2px;
+}
+
+.likes i:hover {
+    cursor: pointer;
 }
 
 h2 {

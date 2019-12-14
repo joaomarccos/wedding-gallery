@@ -7,11 +7,16 @@
 {% block title %}Gallery{% endblock %}
 
 {% block navbar %}
-<div class="navbar">
-    <span class="pull-right"><a class="btn btn-sm btn-default" style="margin: 10px"
-                                href="/manage">Manage gallery</a></span>
-    <h3 style="display: block; max-width: 200px">Wedding Gallery</h3>
-</div>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <span class="navbar-brand">Wedding Gallery</span>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/manage">Review Photos</a></li>
+    </ul>
+  </div>
+</nav>
 {% endblock %}
 {% block content %}
 <section class="upload-container">
@@ -28,7 +33,7 @@
     </p>
     <div>
         <form method="POST" action="/upload" enctype="multipart/form-data">
-            <div class="file-upload-wrapper" data-text="Send a photo!">
+            <div class="file-upload-wrapper" data-text="yourphoto.png">
                 <input name="file" type="file" class="file-upload-field" required>
             </div>
             <br>
@@ -40,9 +45,8 @@
         </form>
     </div>
 </section>
-</hr>
+<hr/>
 <section class="container">
-    <h1>Photos:</h1>
     <p>
         sort by: <a href="/?page={{ request.args.get('page', 1) }}&sort=likes">likes</a> | <a
             href="/?page={{ request.args.get('page', 1) }}&sort=timestamp">date</a>
@@ -66,13 +70,12 @@
                     <img src="{{photo.url}}" alt="">
                 </div>
                 <div class="grid-item-caption">
-                    <p class="text-center">Author: {{photo.author}}</p>
-                    <span>
-                        <span id="{{photo._id}}">{{photo.likes}}</span>
-                        <button onclick="like('{{photo._id}}')" class="btn btn-link">
-                            <i class="glyphicon glyphicon-thumbs-up"></i>
-                        </button>
-                    </span>
+                    <span>by {{photo.author}}</span>
+                    <br>
+                    <div class="text-right likes">
+                        <span id="{{photo._id}}" class="text-muted no-decorate">{{photo.likes}}&nbsp;</span>
+                        <i onclick="like('{{photo._id}}')" class="glyphicon glyphicon-thumbs-up"></i>
+                    </div>
                 </div>
             </div>
             {% endfor %}

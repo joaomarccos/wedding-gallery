@@ -14,7 +14,6 @@ setup_logger()
 app = Flask(__name__)
 Bootstrap(app)
 
-app.config['DEBUG'] = True
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
 # MongoDB Config
@@ -24,8 +23,9 @@ app.config['MONGODB_SETTINGS'] = {
     'host': os.environ['MONGO_URI']
 }
 
-
+# security
 app.secret_key = os.environ['APP_SECRET']
+app.config['SECURITY_PASSWORD_HASH'] = 'bcrypt'
 app.config['SECURITY_PASSWORD_SALT'] = os.environ['APP_SECRET']
 
 # Create database connection object

@@ -22,7 +22,7 @@
 .grid-item-caption {
     font-size: small;
     font-weight: bold;
-    background: black;
+    border-bottom: 1px solid lightgrey;
     text-align: center;
     color: #5d5d5d;
     text-transform: capitalize;

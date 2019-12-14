@@ -6,7 +6,7 @@ body {
 
 .upload-container {
     display: block;
-    width: 300px;
+    width: 700px;
     margin: 0 auto;
     clear: both;
 }
@@ -74,4 +74,16 @@ body {
     display: block;
     cursor: pointer;
     width: 100%;
+}
+
+.login-button {
+    background: #3d8a62;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: large;
+    display: block;
+    text-align: center;
+    width: 200px;
 }

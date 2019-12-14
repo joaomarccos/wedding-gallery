@@ -5,6 +5,7 @@ from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_mongoengine import MongoEngine
 from flask_security import Security, MongoEngineUserDatastore
+from werkzeug.security import generate_password_hash
 
 from logger_utils import setup_logger
 from models.security_model import User, Role
@@ -44,10 +45,10 @@ s3 = boto3.resource('s3')
 def create_user():
     user_datastore.find_or_create_role(name='owner', description='Gallery Owner')
     if not user_datastore.get_user('joao'):
-        user_datastore.create_user(email='joao', password='123')
+        user_datastore.create_user(email='joao', password=generate_password_hash('123'))
         user_datastore.add_role_to_user('joao', 'owner')
     if not user_datastore.get_user('maria'):
-        user_datastore.create_user(email='maria', password='123')
+        user_datastore.create_user(email='maria', password=generate_password_hash('123'))
         user_datastore.add_role_to_user('maria', 'owner')
 
 

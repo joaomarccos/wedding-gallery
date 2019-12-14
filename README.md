@@ -30,7 +30,7 @@ on master commit:
 
 ### [Clik here to view running - http://3.215.179.89/](http://3.215.179.89/)
 
-User the users bellow to approve new photos:
+Use the users bellow to approve new photos:
     
     email: joao
     password: 123

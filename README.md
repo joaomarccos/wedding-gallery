@@ -1,6 +1,6 @@
 # weeding-gallery
 
-![Build](https://img.shields.io/github/workflow/status/joaomarccos/wedding-gallery/Deploy%20to%20Amazon%20ECS/master)
+![Workflow Status](https://img.shields.io/github/workflow/status/joaomarccos/wedding-gallery/Deploy%20to%20Amazon%20ECS/master)
 
 ## Stack and Technologies:
  1. Python Language 

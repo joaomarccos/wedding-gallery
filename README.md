@@ -1,5 +1,7 @@
 # weeding-gallery
 
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/joaomarccos/wedding-gallery/Deploy to Amazon ECS/master)
+
 ## Stack and Technologies:
  1. Python Language 
  2. Flask (Bootstrap + Security)

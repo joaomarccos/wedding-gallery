@@ -1,4 +1,4 @@
-# weeding-gallery
+# wedding-gallery
 
 ![Workflow Status](https://img.shields.io/github/workflow/status/joaomarccos/wedding-gallery/Deploy%20to%20Amazon%20ECS/master)
 

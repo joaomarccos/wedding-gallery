@@ -30,7 +30,9 @@ on master commit:
  - Fill in the new image ID in the Amazon ECS task definition
  - Deploy Amazon ECS task definition
 
+<!---
 ### [Clik here to view running - http://3.215.179.89/](http://3.215.179.89/)
+-->
 
 Use the users bellow to approve new photos:
     
